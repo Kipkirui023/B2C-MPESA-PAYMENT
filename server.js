@@ -12,6 +12,60 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+
+const express = require("express");
+const session = require("express-session");
+const path = require("path");
+require("dotenv").config();
+
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: "supersecretkey",
+    resave: false,
+    saveUninitialized: false
+}));
+
+// Login page route
+app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/login.html"));
+});
+
+// Login POST request
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    if (
+        username === process.env.ADMIN_USERNAME &&
+        password === process.env.ADMIN_PASSWORD
+    ) {
+        req.session.authenticated = true;
+        return res.redirect("/dashboard");
+    }
+
+    res.send("Invalid login. <a href='/login'>Try again</a>");
+});
+
+// Protected Route
+app.get("/dashboard", (req, res) => {
+    if (!req.session.authenticated) {
+        return res.redirect("/login");
+    }
+    res.sendFile(path.join(__dirname, "public/dashboard.html"));
+});
+
+// Logout
+app.get("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/login");
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server running on port " + PORT));
+
+
 // M-Pesa credentials
 const config = {
   consumerKey: process.env.MPESA_CONSUMER_KEY,
