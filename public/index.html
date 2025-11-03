@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa Payment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="payment-card">
+            <h1>M-Pesa Payment</h1>
+            <p class="subtitle">Enter your details to make a payment</p>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        placeholder="e.g., 0712345678" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount (KES)</label>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        placeholder="Enter amount" 
+                        min="1"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="pay-button" id="payButton">
+                    Pay with M-Pesa
+                </button>
+            </form>
+            
+            <div id="message" class="message"></div>
+            
+            <div class="instructions">
+                <h3>How to pay:</h3>
+                <ol>
+                    <li>Enter your M-Pesa registered phone number</li>
+                    <li>Enter the amount you want to pay</li>
+                    <li>Click "Pay with M-Pesa"</li>
+                    <li>Check your phone for STK Push prompt</li>
+                    <li>Enter your M-Pesa PIN to complete payment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
